@@ -1,0 +1,27 @@
+name: Daily Auto Commit by 24f2006754@ds.study.iitm.ac.in
+
+on:
+  schedule:
+    - cron: '30 2 * * *'  # 2:30 AM UTC daily
+  workflow_dispatch:  # Lets you test manually
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update status file by 24f2006754@ds.study.iitm.ac.in
+        run: |
+          echo "$(date): Daily automated update by 24f2006754@ds.study.iitm.ac.in" >> STATUS.md
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "24f2006754@ds.study.iitm.ac.in"
+          git config user.email "24f2006754@ds.study.iitm.ac.in"
+          git add STATUS.md
+          git commit -m "Daily update: $(date) by 24f2006754@ds.study.iitm.ac.in" || exit 0
+          git push
